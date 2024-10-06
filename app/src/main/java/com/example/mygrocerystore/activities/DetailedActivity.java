@@ -108,6 +108,7 @@ public class DetailedActivity extends AppCompatActivity {
                 if (totalQuantity<10){
                     totalQuantity++;
                     quantity.setText(String.valueOf(totalQuantity));
+                    totalPrice = viewAllModel.getPrice()*totalQuantity;
                 }
             }
         });
@@ -117,6 +118,7 @@ public class DetailedActivity extends AppCompatActivity {
                 if (totalQuantity>1){
                     totalQuantity--;
                     quantity.setText(String.valueOf(totalQuantity));
+                    totalPrice = viewAllModel.getPrice()*totalQuantity;
                 }
             }
         });
