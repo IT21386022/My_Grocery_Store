@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class CategoryFragment extends Fragment {
     RecyclerView recyclerView;
     List<NavCategoryModel> navCategoryModelList;
     NavCategoryAdapter navCategoryAdapter;
+    ProgressBar progressBar;
 
     @SuppressLint("MissingInflatedId")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,9 +42,11 @@ public class CategoryFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        recyclerView = root.findViewById(R.id.cat_rec);
+        progressBar = root.findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.VISIBLE);
 
-        //popular items
+        recyclerView = root.findViewById(R.id.cat_rec);
+        recyclerView.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         navCategoryModelList = new ArrayList<>();
         navCategoryAdapter = new NavCategoryAdapter(getActivity(), navCategoryModelList);
@@ -58,10 +62,14 @@ public class CategoryFragment extends Fragment {
                                 NavCategoryModel navCategoryModel = document.toObject(NavCategoryModel.class);
                                 navCategoryModelList.add(navCategoryModel);
                                 navCategoryAdapter.notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
                             }
 
                         } else {
                             Toast.makeText(getActivity(), "Error"+task.getException(),Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
                         }
                     }
                 });
