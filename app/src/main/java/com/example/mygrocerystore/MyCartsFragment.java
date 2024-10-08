@@ -102,10 +102,28 @@ public class MyCartsFragment extends Fragment {
                 Intent intent = new Intent(getContext(), OrderFormActivity.class);
                 intent.putExtra("itemList", (Serializable) cartModelList);
                 startActivity(intent);
+                clearCart();
             }
         });
 
         return root;
+    }
+
+    private void clearCart() {
+        String userId = auth.getCurrentUser().getUid();
+        db.collection("CurrentUser").document(userId)
+                .collection("AddToCart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
+                                documentSnapshot.getReference().delete(); // Remove each cart item
+                            }
+                            cartModelList.clear(); // Clear local list
+                            cartAdapter.notifyDataSetChanged(); // Update adapter
+                        }
+                    }
+                });
     }
 
     public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {

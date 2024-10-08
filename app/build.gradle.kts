@@ -55,6 +55,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.circleimageview)
+    implementation(libs.retrofit)
 
 
 

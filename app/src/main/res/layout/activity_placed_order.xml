@@ -36,17 +36,36 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alice"
-        android:text="Thank you for purchasing our product \n Please Come Again!!!"
+        android:text="Thank you for purchasing our product \n You can pay after your product is received...\nPlease Come Again!!!"
         android:textAlignment="center"
         android:textColor="#DD4545"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+         />
+
+    <Button
+        android:id="@+id/rate_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rate Us"
+        android:layout_margin="60dp"
+        android:backgroundTint="@color/purple_200"
+        android:textColor="#fff"
+        android:padding="12dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

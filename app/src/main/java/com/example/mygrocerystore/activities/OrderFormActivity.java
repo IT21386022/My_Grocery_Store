@@ -51,69 +51,12 @@ public class OrderFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 placeOrder();
-                Intent intent = new Intent(OrderFormActivity.this, PaymentActivity.class);
+                Intent intent = new Intent(OrderFormActivity.this, PlacedOrderActivity.class);
                 startActivity(intent);
             }
         });
 
     }
-
-//    private void placeOrder() {
-//        String userName = name.getText().toString();
-//        String userMobile = mobile.getText().toString();
-//        String userAddress = address.getText().toString();
-//
-//        if (userName.isEmpty() || userMobile.isEmpty() || userAddress.isEmpty()) {
-//            Toast.makeText(OrderFormActivity.this, "Please fill in all the details", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // Get cart items from the intent
-//        List<MyCartModel> cartList = (ArrayList<MyCartModel>) getIntent().getSerializableExtra("itemList");
-//
-//        if (cartList != null && cartList.size() > 0) {
-//            // Create a HashMap to store the order details (form data + cart items)
-//            final HashMap<String, Object> orderMap = new HashMap<>();
-//
-//            // Add form data (name, mobile, address)
-//            orderMap.put("userName", userName);
-//            orderMap.put("userMobile", userMobile);
-//            orderMap.put("userAddress", userAddress);
-//            orderMap.put("status", "Placed");
-//
-//            // Add cart items
-//            List<HashMap<String, Object>> cartItemList = new ArrayList<>();
-//            for (MyCartModel model : cartList) {
-//                HashMap<String, Object> cartItemMap = new HashMap<>();
-//                cartItemMap.put("productName", model.getProductName());
-//                cartItemMap.put("productPrice", model.getProductPrice());
-//                cartItemMap.put("currentDate", model.getCurrentDate());
-//                cartItemMap.put("currentTime", model.getCurrentTime());
-//                cartItemMap.put("totalQuantity", model.getTotalQuantity());
-//                cartItemMap.put("totalPrice", model.getTotalPrice());
-//                cartItemList.add(cartItemMap);
-//            }
-//
-//            orderMap.put("cartItems", cartItemList);
-//
-//            // Save the order in Firestore
-//            db.collection("CurrentUser").document(auth.getCurrentUser().getUid())
-//                    .collection("MyOrder").add(orderMap)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            if (task.isSuccessful()) {
-//                                Toast.makeText(OrderFormActivity.this, "Your Order Has Been Placed", Toast.LENGTH_SHORT).show();
-//                                finish();  // Close the activity after placing the order
-//                            } else {
-//                                Toast.makeText(OrderFormActivity.this, "Failed to place the order", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(OrderFormActivity.this, "No items in cart", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     private void placeOrder() {
         String userName = name.getText().toString();

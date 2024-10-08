@@ -78,13 +78,6 @@ public class MyOrdersFragment extends Fragment {
                     }
                 });
 
-
-
-
-
-
-
-
         return root;
     }
 

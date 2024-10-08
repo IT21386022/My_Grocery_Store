@@ -19,6 +19,7 @@ glide = "4.16.0"
 firebaseFirestore = "25.1.0"
 firebaseStorage = "21.0.0"
 circleimageview = "3.1.0"
+retrofit = "2.11.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -39,6 +40,7 @@ glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "gl
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 circleimageview = { group = "de.hdodenhof", name = "circleimageview", version = "3.1.0" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version = "2.11.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
