@@ -18,6 +18,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email, password;
     TextView signUp;
     FirebaseAuth auth;
+    FirebaseDatabase db;
     ProgressBar progressBar;
 
     @Override
@@ -33,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
         signIn = findViewById(R.id.login_btn);
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
@@ -56,40 +62,76 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginUser() {
 
+    private void loginUser() {
         String userEmail = email.getText().toString();
         String userPassword = password.getText().toString();
 
-        if(TextUtils.isEmpty(userEmail)){
-            Toast.makeText(this,"Email is Empty", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(userEmail)) {
+            Toast.makeText(this, "Email is Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(userPassword)){
-            Toast.makeText(this,"Password is Empty", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(userPassword)) {
+            Toast.makeText(this, "Password is Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (userPassword.length()<6){
-            Toast.makeText(this,"Password Length must be greater than 6 characters", Toast.LENGTH_SHORT).show();
+        if (userPassword.length() < 6) {
+            Toast.makeText(this, "Password Length must be greater than 6 characters", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        //Login user
-        auth.signInWithEmailAndPassword(userEmail,userPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        // Show progress bar
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Query the Firebase Realtime Database to check if the email exists
+        FirebaseDatabase.getInstance().getReference().child("Users")
+                .orderByChild("email").equalTo(userEmail)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // If snapshot exists, email exists in the database
+                        if (snapshot.exists()) {
+                            for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                String storedPassword = userSnapshot.child("password").getValue(String.class);
+
+                                // Check if the password matches
+                                if (storedPassword != null && storedPassword.equals(userPassword)) {
+                                    // If email and password match, proceed with Firebase Authentication
+                                    auth.signInWithEmailAndPassword(userEmail, userPassword)
+                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    progressBar.setVisibility(View.GONE);
+
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                        startActivity(intent);
+                                                        finish();  // Close LoginActivity
+                                                    } else {
+                                                        Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    // Password mismatch
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } else {
+                            // Email does not exist in the database
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(LoginActivity.this,"Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }else{
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(LoginActivity.this,"Error"+task.getException(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Email not registered", Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(LoginActivity.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 }

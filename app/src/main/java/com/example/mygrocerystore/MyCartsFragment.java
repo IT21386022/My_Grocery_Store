@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.mygrocerystore.activities.OrderFormActivity;
 import com.example.mygrocerystore.activities.PlacedOrderActivity;
 import com.example.mygrocerystore.adapters.MyCartAdapter;
 import com.example.mygrocerystore.models.MyCartModel;
@@ -83,7 +84,9 @@ public class MyCartsFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()){
+                                String documentId = documentSnapshot.getId();
                                 MyCartModel cartModel = documentSnapshot.toObject(MyCartModel.class);
+                                cartModel.setId(documentId);
                                 cartModelList.add(cartModel);
                                 cartAdapter.notifyDataSetChanged();
                                 progressBar.setVisibility(View.GONE);
@@ -96,7 +99,7 @@ public class MyCartsFragment extends Fragment {
         buyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PlacedOrderActivity.class);
+                Intent intent = new Intent(getContext(), OrderFormActivity.class);
                 intent.putExtra("itemList", (Serializable) cartModelList);
                 startActivity(intent);
             }

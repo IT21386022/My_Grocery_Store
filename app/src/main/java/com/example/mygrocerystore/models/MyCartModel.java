@@ -9,6 +9,11 @@ public class MyCartModel implements Serializable {
     String currentTime;
     String totalQuantity;
     int totalPrice;
+    String id;
+    String status;
+    String userAddress;
+    String userMobile;
+    String userName;
 
     public MyCartModel() {
     }
@@ -20,6 +25,14 @@ public class MyCartModel implements Serializable {
         this.currentTime = currentTime;
         this.totalQuantity = totalQuantity;
         this.totalPrice = totalPrice;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getProductName() {
@@ -66,7 +79,39 @@ public class MyCartModel implements Serializable {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -1,6 +1,10 @@
 package com.example.mygrocerystore.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +31,8 @@ public class PlacedOrderActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore db;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,7 @@ public class PlacedOrderActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
 
         List<MyCartModel> list = (ArrayList<MyCartModel>) getIntent().getSerializableExtra("itemList");
 
@@ -59,4 +66,5 @@ public class PlacedOrderActivity extends AppCompatActivity {
         }
 
     }
+
 }

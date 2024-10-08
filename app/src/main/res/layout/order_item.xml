@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#B3FB9F"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Product Name"
+                android:textSize="16sp"
+                android:fontFamily="@font/alice" />
+
+            <TextView
+                android:id="@+id/order_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Product Name"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/alice" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Order Date"
+                android:textSize="16sp"
+                android:fontFamily="@font/alice" />
+
+            <TextView
+                android:id="@+id/order_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Order Date"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/alice" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Amount"
+                android:textSize="16sp"
+                android:fontFamily="@font/alice" />
+
+            <TextView
+                android:id="@+id/order_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Amount"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/alice" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Order Status"
+                android:textSize="16sp"
+                android:fontFamily="@font/alice" />
+
+            <TextView
+                android:id="@+id/order_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Order Status"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/alice" />
+
+        </LinearLayout>
+
+        <!-- Horizontal Order Status Timeline -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Order Placed -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <!-- Circle -->
+                <View
+                    android:id="@+id/timeline_circle_placed"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/timeline_circle_active" />
+
+                <!-- Text -->
+                <TextView
+                    android:id="@+id/timeline_status_placed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Placed"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!-- Connecting Line -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Pending -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/timeline_circle_pending"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/timeline_circle" />
+
+                <TextView
+                    android:id="@+id/timeline_status_pending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pending"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!-- Connecting Line -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Delivered -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/timeline_circle_delivered"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/timeline_circle" />
+
+                <TextView
+                    android:id="@+id/timeline_status_delivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delivered"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

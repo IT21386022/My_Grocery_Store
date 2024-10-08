@@ -55,20 +55,56 @@ public class NavCategoryActivity extends AppCompatActivity {
         adapter = new NavCategoryDetailedAdapter(this,list);
         recyclerView.setAdapter(adapter);
 
-        if(type != null && type.equalsIgnoreCase("drink")){
-            db.collection("NavCategoryDetailed").whereEqualTo("type","drink").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    for(DocumentSnapshot documentSnapshot:task.getResult().getDocuments()){
+//        if (type != null) {
+//            switch (type.toLowerCase()) {
+//                case "drink":
+//                    fetchCategoryData("drink");
+//                    break;
+//                case "sweet":
+//                    fetchCategoryData("sweet");
+//                    break;
+//                default:
+//                    Toast.makeText(this, "Unknown category", Toast.LENGTH_SHORT).show();
+//                    progressBar.setVisibility(View.GONE);
+//            }
+
+        db.collection("NavCategoryDetailed").whereEqualTo("type", "drink").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
                         NavCategoryDetailedModel viewAllModel = documentSnapshot.toObject(NavCategoryDetailedModel.class);
                         list.add(viewAllModel);
                         adapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
                     }
+                    progressBar.setVisibility(View.GONE);  // Unhide the recyclerView after loading the data
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(NavCategoryActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
+        });
+
 
     }
 }
+
+//    private void fetchCategoryData(String categoryType) {
+//        db.collection("NavCategoryDetailed").whereEqualTo("type", categoryType).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
+//                        NavCategoryDetailedModel viewAllModel = documentSnapshot.toObject(NavCategoryDetailedModel.class);
+//                        list.add(viewAllModel);
+//                    }
+//                    adapter.notifyDataSetChanged();
+//                    progressBar.setVisibility(View.GONE);
+//                    recyclerView.setVisibility(View.VISIBLE);
+//                } else {
+//                    Toast.makeText(NavCategoryActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//    }
