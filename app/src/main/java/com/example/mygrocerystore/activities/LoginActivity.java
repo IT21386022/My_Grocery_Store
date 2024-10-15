@@ -10,18 +10,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mygrocerystore.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.mygrocerystore.client.ApiClient;
+import com.example.mygrocerystore.client.RetrofitClient;
+import com.example.mygrocerystore.api.ApiService;
+import com.example.mygrocerystore.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -84,54 +85,82 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         // Query the Firebase Realtime Database to check if the email exists
-        FirebaseDatabase.getInstance().getReference().child("Users")
-                .orderByChild("email").equalTo(userEmail)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        // If snapshot exists, email exists in the database
-                        if (snapshot.exists()) {
-                            for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                                String storedPassword = userSnapshot.child("password").getValue(String.class);
+//        FirebaseDatabase.getInstance().getReference().child("Users")
+//                .orderByChild("email").equalTo(userEmail)
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        // If snapshot exists, email exists in the database
+//                        if (snapshot.exists()) {
+//                            for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+//                                String storedPassword = userSnapshot.child("password").getValue(String.class);
+//
+//                                // Check if the password matches
+//                                if (storedPassword != null && storedPassword.equals(userPassword)) {
+//                                    // If email and password match, proceed with Firebase Authentication
+//                                    auth.signInWithEmailAndPassword(userEmail, userPassword)
+//                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                                                @Override
+//                                                public void onComplete(@NonNull Task<AuthResult> task) {
+//                                                    progressBar.setVisibility(View.GONE);
+//
+//                                                    if (task.isSuccessful()) {
+//                                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+//                                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                                                        startActivity(intent);
+//                                                        finish();  // Close LoginActivity
+//                                                    } else {
+//                                                        Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                                                    }
+//                                                }
+//                                            });
+//                                } else {
+//                                    // Password mismatch
+//                                    progressBar.setVisibility(View.GONE);
+//                                    Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        } else {
+//                            // Email does not exist in the database
+//                            progressBar.setVisibility(View.GONE);
+//                            Toast.makeText(LoginActivity.this, "Email not registered", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                        progressBar.setVisibility(View.GONE);
+//                        Toast.makeText(LoginActivity.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
-                                // Check if the password matches
-                                if (storedPassword != null && storedPassword.equals(userPassword)) {
-                                    // If email and password match, proceed with Firebase Authentication
-                                    auth.signInWithEmailAndPassword(userEmail, userPassword)
-                                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                                    progressBar.setVisibility(View.GONE);
+        // Make API call using Retrofit
+        ApiService apiService = ApiClient.getApiService();
+        UserModel userModel = new UserModel(userEmail, userPassword);
 
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                                        startActivity(intent);
-                                                        finish();  // Close LoginActivity
-                                                    } else {
-                                                        Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            });
-                                } else {
-                                    // Password mismatch
-                                    progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        } else {
-                            // Email does not exist in the database
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(LoginActivity.this, "Email not registered", Toast.LENGTH_SHORT).show();
-                        }
+        apiService.loginUser(userModel).enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    UserModel loggedInUser = response.body();
+                    if (loggedInUser != null) {
+                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();  // Close LoginActivity
                     }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Login Failed: " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(LoginActivity.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     }
 
-}

@@ -36,7 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
 
     CircleImageView profileImg;
-    EditText name, email, number, address;
+    EditText firstname, email, number, address;
     Button update,delete;
 
     FirebaseStorage storage;
@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
 
         profileImg = root.findViewById(R.id.profile_img);
-        name = root.findViewById(R.id.profile_name);
+        firstname = root.findViewById(R.id.profile_name);
         email = root.findViewById(R.id.profile_email);
         number = root.findViewById(R.id.profile_number);
         address = root.findViewById(R.id.profile_address);
@@ -70,9 +70,9 @@ public class ProfileFragment extends Fragment {
                         UserModel userModel = snapshot.getValue(UserModel.class);
                         if (userModel != null) {
                             Glide.with(getContext()).load(userModel.getProfileImg()).into(profileImg);
-                            name.setText(userModel.getName());
+                            firstname.setText(userModel.getFirstname());
                             email.setText(userModel.getEmail());
-                            number.setText(userModel.getNumber());
+                            number.setText(userModel.getPhone());
                             address.setText(userModel.getAddress());
                         }
                     }
@@ -205,7 +205,7 @@ public class ProfileFragment extends Fragment {
     // Method to update the user's profile
     private void updateUserProfile() {
         // Get values from EditText fields
-        String userName = name.getText().toString().trim();
+        String userName = firstname.getText().toString().trim();
         String userEmail = email.getText().toString().trim();
         String userNumber = number.getText().toString().trim();
         String userAddress = address.getText().toString().trim();
@@ -226,9 +226,9 @@ public class ProfileFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserModel userModel = snapshot.getValue(UserModel.class);
                         if (userModel != null) {
-                            userModel.setName(userName);
+                            userModel.setFirstname(userName);
                             userModel.setEmail(userEmail);
-                            userModel.setNumber(userNumber);
+                            userModel.setPhone(userNumber);
                             userModel.setAddress(userAddress);
 
                             // If profile image was updated, set the new image URI

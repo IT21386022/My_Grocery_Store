@@ -11,21 +11,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mygrocerystore.R;
+import com.example.mygrocerystore.client.RetrofitClient;
+import com.example.mygrocerystore.api.AuthApi;
 import com.example.mygrocerystore.models.UserModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
+import retrofit2.Call;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     Button signUp;
-    EditText name, email, password;
+    EditText firstname,lastname, email, password,phone;
     TextView signIn;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -42,9 +42,11 @@ public class RegistrationActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
         signUp = findViewById(R.id.reg_btn);
-        name = findViewById(R.id.name);
+        firstname = findViewById(R.id.firstname_reg);
+        lastname = findViewById(R.id.lastname_reg);
         email = findViewById(R.id.email_reg);
         password = findViewById(R.id.password_reg);
+        phone = findViewById(R.id.phone_reg);
         signIn = findViewById(R.id.sign_in);
 
         signIn.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +67,18 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void createUser() {
-        String userName = name.getText().toString();
+        String userFirstName = firstname.getText().toString();
+        String userLastName = lastname.getText().toString();
         String userEmail = email.getText().toString();
         String userPassword = password.getText().toString();
+        String userPhone = phone.getText().toString();
 
-        if(TextUtils.isEmpty(userName)){
-            Toast.makeText(this,"Name is Empty", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(userFirstName)){
+            Toast.makeText(this,"First Name is Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(userLastName)){
+            Toast.makeText(this,"Last Name is Empty", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(userEmail)){
@@ -81,29 +89,59 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this,"Password is Empty", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(TextUtils.isEmpty(userPhone)){
+            Toast.makeText(this,"Phone is Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (userPassword.length()<6){
             Toast.makeText(this,"Password Length must be greater than 6 characters", Toast.LENGTH_SHORT).show();
             return;
         }
 
         //create user
-        auth.createUserWithEmailAndPassword(userEmail,userPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            UserModel userModel = new UserModel(userName,userEmail,userPassword);
-                            String id = task.getResult().getUser().getUid();
-                            database.getReference().child("Users").child(id).setValue(userModel);
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(RegistrationActivity.this,"Registration Successful", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(RegistrationActivity.this,"Error"+task.getException(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+//        auth.createUserWithEmailAndPassword(userEmail,userPassword)
+//                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if(task.isSuccessful()){
+//                            UserModel userModel = new UserModel(userName,userEmail,userPassword);
+//                            String id = task.getResult().getUser().getUid();
+//                            database.getReference().child("Users").child(id).setValue(userModel);
+//                            progressBar.setVisibility(View.GONE);
+//                            Toast.makeText(RegistrationActivity.this,"Registration Successful", Toast.LENGTH_SHORT).show();
+//                        }
+//                        else{
+//                            progressBar.setVisibility(View.GONE);
+//                            Toast.makeText(RegistrationActivity.this,"Error"+task.getException(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Create user model
+        UserModel userModel = new UserModel(userFirstName,userLastName,userEmail,userPassword,userPhone);
+
+        // Retrofit instance
+        AuthApi authApi = RetrofitClient.getRetrofitInstance().create(AuthApi.class);
+
+        authApi.registerUser(userModel).enqueue(new retrofit2.Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, retrofit2.Response<UserModel> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegistrationActivity.this, "Registration Failed: " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(RegistrationActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
