@@ -48,35 +48,35 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     public void onBindViewHolder(@NonNull MyCartAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.name.setText(cartModelList.get(position).getProductName());
         holder.price.setText(cartModelList.get(position).getProductPrice());
-        holder.date.setText(cartModelList.get(position).getCurrentDate());
-        holder.time.setText(cartModelList.get(position).getCurrentTime());
-        holder.quantity.setText(cartModelList.get(position).getTotalQuantity());
-        holder.totalPrice.setText(String.valueOf(cartModelList.get(position).getTotalPrice()));
+//        holder.date.setText(cartModelList.get(position).getCurrentDate());
+//        holder.time.setText(cartModelList.get(position).getCurrentTime());
+//        holder.quantity.setText(cartModelList.get(position).getTotalQuantity());
+//        holder.totalPrice.setText(String.valueOf(cartModelList.get(position).getTotalPrice()));
 
-        holder.deleteItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                firestore.collection("CurrentUser").document(auth.getCurrentUser().getUid())
-                        .collection("AddToCart")
-                        .document(cartModelList.get(position).getId())
-                        .delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    cartModelList.remove(cartModelList.get(position));
-                                    notifyDataSetChanged();
-                                    Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(context, "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-            }
-        });
+//        holder.deleteItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                firestore.collection("CurrentUser").document(auth.getCurrentUser().getUid())
+//                        .collection("AddToCart")
+//                        .document(cartModelList.get(position).getId())
+//                        .delete()
+//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if (task.isSuccessful()){
+//                                    cartModelList.remove(cartModelList.get(position));
+//                                    notifyDataSetChanged();
+//                                    Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
+//                                }else {
+//                                    Toast.makeText(context, "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//            }
+//        });
 
         //pass total amount to My Cart Fragment
-        totalPrice = totalPrice + cartModelList.get(position).getTotalPrice();
+//        totalPrice = totalPrice + cartModelList.get(position).getTotalPrice();
         Intent intent = new Intent("MyTotalAmount");
         intent.putExtra("totalAmount",totalPrice);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);

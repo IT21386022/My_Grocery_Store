@@ -92,20 +92,20 @@ public class OrderFormActivity extends AppCompatActivity {
                 HashMap<String, Object> cartItemMap = new HashMap<>();
                 cartItemMap.put("productName", model.getProductName());
                 cartItemMap.put("productPrice", model.getProductPrice());
-                cartItemMap.put("currentDate", model.getCurrentDate());
-                cartItemMap.put("currentTime", model.getCurrentTime());
-                cartItemMap.put("totalQuantity", model.getTotalQuantity());
-                cartItemMap.put("totalPrice", model.getTotalPrice());
+//                cartItemMap.put("currentDate", model.getCurrentDate());
+//                cartItemMap.put("currentTime", model.getCurrentTime());
+//                cartItemMap.put("totalQuantity", model.getTotalQuantity());
+//                cartItemMap.put("totalPrice", model.getTotalPrice());
                 cartItemList.add(cartItemMap);
 
                 // Add to productNames and totalPrices for the orderMap
                 productNames.append(model.getProductName()).append(", "); // Append product names
-                totalPrices.append(model.getTotalPrice()).append(", "); // Append total prices
+//                totalPrices.append(model.getTotalPrice()).append(", "); // Append total prices
 
                 // Get current date from the first cart item
-                if (currentDate.isEmpty()) {
-                    currentDate = model.getCurrentDate();
-                }
+//                if (currentDate.isEmpty()) {
+//                    currentDate = model.getCurrentDate();
+//                }
             }
 
             // Clean up the strings by removing the last comma and space if they exist

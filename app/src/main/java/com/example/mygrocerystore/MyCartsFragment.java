@@ -78,23 +78,23 @@ public class MyCartsFragment extends Fragment {
         cartAdapter = new MyCartAdapter(getActivity(),cartModelList);
         recyclerView.setAdapter(cartAdapter);
 
-        db.collection("CurrentUser").document(auth.getCurrentUser().getUid())
-                .collection("AddToCart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()){
-                                String documentId = documentSnapshot.getId();
-                                MyCartModel cartModel = documentSnapshot.toObject(MyCartModel.class);
-                                cartModel.setId(documentId);
-                                cartModelList.add(cartModel);
-                                cartAdapter.notifyDataSetChanged();
-                                progressBar.setVisibility(View.GONE);
-                                recyclerView.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-                });
+//        db.collection("CurrentUser").document(auth.getCurrentUser().getUid())
+//                .collection("AddToCart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()){
+//                                String documentId = documentSnapshot.getId();
+//                                MyCartModel cartModel = documentSnapshot.toObject(MyCartModel.class);
+//                                cartModel.setId(documentId);
+//                                cartModelList.add(cartModel);
+//                                cartAdapter.notifyDataSetChanged();
+//                                progressBar.setVisibility(View.GONE);
+//                                recyclerView.setVisibility(View.VISIBLE);
+//                            }
+//                        }
+//                    }
+//                });
 
         buyNow.setOnClickListener(new View.OnClickListener() {
             @Override
