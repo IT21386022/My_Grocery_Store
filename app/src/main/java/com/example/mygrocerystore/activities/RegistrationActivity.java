@@ -25,7 +25,7 @@ import retrofit2.Call;
 public class RegistrationActivity extends AppCompatActivity {
 
     Button signUp;
-    EditText firstname,lastname, email, password,phone;
+    EditText firstname,lastname, email, password,phone,role;
     TextView signIn;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -47,6 +47,7 @@ public class RegistrationActivity extends AppCompatActivity {
         email = findViewById(R.id.email_reg);
         password = findViewById(R.id.password_reg);
         phone = findViewById(R.id.phone_reg);
+        role = findViewById(R.id.role_reg);
         signIn = findViewById(R.id.sign_in);
 
         signIn.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +73,7 @@ public class RegistrationActivity extends AppCompatActivity {
         String userEmail = email.getText().toString();
         String userPassword = password.getText().toString();
         String userPhone = phone.getText().toString();
+        String userRole = role.getText().toString();
 
         if(TextUtils.isEmpty(userFirstName)){
             Toast.makeText(this,"First Name is Empty", Toast.LENGTH_SHORT).show();
@@ -120,7 +122,7 @@ public class RegistrationActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         // Create user model
-        UserModel userModel = new UserModel(userFirstName,userLastName,userEmail,userPassword,userPhone);
+        UserModel userModel = new UserModel(userFirstName,userLastName,userEmail,userPassword,userPhone,userRole);
 
         // Retrofit instance
         AuthApi authApi = RetrofitClient.getRetrofitInstance().create(AuthApi.class);

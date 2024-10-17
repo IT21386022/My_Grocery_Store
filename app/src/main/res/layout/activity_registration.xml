@@ -104,6 +104,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_reg" />
 
+    <EditText
+        android:textColor="#888887"
+        android:id="@+id/role_reg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/edittext_background"
+        android:drawableLeft="@drawable/ic_baseline_person_24"
+        android:drawablePadding="10dp"
+        android:elevation="3dp"
+        android:padding="13dp"
+        app:layout_constraintWidth_percent=".8"
+        android:text="user"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_reg" />
+
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -114,7 +132,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_reg"
+        app:layout_constraintTop_toBottomOf="@+id/role_reg"
         android:layout_marginTop="20dp"/>
 
     <TextView
@@ -143,6 +161,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView"
         tools:ignore="MissingConstraints" />
+
 
     <ProgressBar
         android:id="@+id/progressbar"

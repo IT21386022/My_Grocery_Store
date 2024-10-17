@@ -72,6 +72,7 @@ public class UserModel {
     private String phone;
     private String profileImg;
     private String role;
+    private Boolean isApproved;
     private String token;
     private String message;
     private String address;
@@ -89,7 +90,7 @@ public class UserModel {
         this.role = role;
     }
 
-    public UserModel(String firstname, String lastname, String email, String password, String phone, String profileImg, String role, String token, String message, String address) {
+    public UserModel(String firstname, String lastname, String email, String password, String phone, String profileImg, String role, Boolean isApproved, String token, String message, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -97,10 +98,13 @@ public class UserModel {
         this.phone = phone;
         this.profileImg = profileImg;
         this.role = role;
+        this.isApproved = isApproved;
         this.token = token;
         this.message = message;
         this.address = address;
     }
+
+
 
     public UserModel(String userFirstName, String userLastName, String userEmail, String userPassword, String userPhone) {
     }
@@ -169,7 +173,7 @@ public class UserModel {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role = "user";
     }
 
     public String getToken() {
