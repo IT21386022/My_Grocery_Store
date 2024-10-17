@@ -17,6 +17,8 @@ import com.example.mygrocerystore.adapters.PopularAdapters;
 import com.example.mygrocerystore.api.ProductApi;
 import com.example.mygrocerystore.client.RetrofitClient;
 import com.example.mygrocerystore.models.PopularModel;
+import com.example.mygrocerystore.models.ViewAllModel;
+
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;

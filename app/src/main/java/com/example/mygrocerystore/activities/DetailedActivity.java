@@ -79,19 +79,11 @@ public class DetailedActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(viewAllModel.getImg_url()).into(detailedImg);
             rating.setText(viewAllModel.getRating());
             description.setText(viewAllModel.getDescription());
-            price.setText("Price :$" +viewAllModel.getPrice()+"/kg");
+            price.setText("Price :$" +viewAllModel.getPrice());
 
             totalPrice = viewAllModel.getPrice()*totalQuantity;
 
-            if (viewAllModel.getType().equals("egg")){
-                price.setText("Price :$" +viewAllModel.getPrice()+"/dozen");
-                totalPrice = viewAllModel.getPrice()*totalQuantity;
-            }
 
-            if (viewAllModel.getType().equals("milk")){
-                price.setText("Price :$" +viewAllModel.getPrice()+"/litre");
-                totalPrice = viewAllModel.getPrice()*totalQuantity;
-            }
         }
 
         addToCart = findViewById(R.id.add_to_cart);
