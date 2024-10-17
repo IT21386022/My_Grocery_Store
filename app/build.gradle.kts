@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.retrofitGson)
     implementation(libs.retrofit)
+    implementation(libs.localbroadcastmanager)
 
 
 

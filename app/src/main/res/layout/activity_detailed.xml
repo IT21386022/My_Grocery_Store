@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.DetailedActivity">
 
+    <!-- Product Image -->
     <ImageView
         android:id="@+id/detailed_img"
         android:layout_width="match_parent"
@@ -14,11 +15,11 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_200"
@@ -27,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="Detailed Products" />
 
+    <!-- Price -->
     <TextView
         android:id="@+id/detailed_price"
         android:layout_width="wrap_content"
@@ -36,22 +38,23 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:fontFamily="@font/alice"
-        tools:ignore="MissingConstraints"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detailed_img"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginStart="10dp" />
 
+    <!-- Rating Image -->
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="75dp"
         android:layout_height="35dp"
         android:layout_marginTop="11dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:src="@drawable/ratingbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detailed_img" />
 
+    <!-- Rating Value -->
     <TextView
         android:id="@+id/detailed_rating"
         android:layout_width="wrap_content"
@@ -60,9 +63,10 @@
         android:text="5.0"
         android:textSize="20sp"
         android:layout_marginTop="11dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/detailed_img" />
+        app:layout_constraintEnd_toStartOf="@id/imageView2"
+        app:layout_constraintTop_toBottomOf="@id/detailed_img" />
 
+    <!-- Description Label -->
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
@@ -77,6 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detailed_price" />
 
+    <!-- Description Content -->
     <TextView
         android:id="@+id/detailed_dec"
         android:layout_width="match_parent"
@@ -86,27 +91,30 @@
         android:text="@string/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@id/textView5" />
 
+    <!-- Bottom Panel for Quantity and Cart -->
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:background="#C5FDAD"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Add Quantity Button -->
     <ImageView
         android:id="@+id/add_item"
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:src="@drawable/add_circle"
-        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout"/>
+        app:layout_constraintTop_toTopOf="@id/relativeLayout" />
 
+    <!-- Quantity Display -->
     <TextView
         android:id="@+id/quantity"
         android:layout_width="wrap_content"
@@ -115,12 +123,13 @@
         android:textStyle="bold"
         android:textSize="30sp"
         android:fontFamily="@font/alice"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/add_item"
-        app:layout_constraintTop_toTopOf="@id/relativeLayout"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="7dp"/>
+        app:layout_constraintTop_toTopOf="@id/relativeLayout" />
 
+    <!-- Remove Quantity Button -->
     <ImageView
         android:id="@+id/remove_item"
         android:layout_width="54dp"
@@ -128,18 +137,35 @@
         android:src="@drawable/remove_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/quantity"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toTopOf="@id/relativeLayout" />
 
+    <!-- Add to Cart Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_to_cart"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
+        android:background="@drawable/btn_bg_detailed"
         android:text="Add To Cart"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/remove_item"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
+<!--        app:layout_constraintEnd_toEndOf="parent"-->/>
+
+    <!-- View Cart Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/view_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/btn_bg_detailed"
+        android:text="View Cart"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/relativeLayout"/>
+        app:layout_constraintStart_toEndOf="@+id/add_to_cart"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
