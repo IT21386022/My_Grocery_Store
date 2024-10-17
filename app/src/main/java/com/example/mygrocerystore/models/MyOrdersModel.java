@@ -1,76 +1,115 @@
 package com.example.mygrocerystore.models;
 
+import com.google.type.DateTime;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class MyOrdersModel {
-    private String id;
-    private String productName;
-    private String productPrice;
-    private String currentDate;
-    private String status;
-    private List<MyCartModel> cartItems;
+    private String OrderId;
+    private String UserId;
+    private DateTime CreatedAt;
+    private String MobileNumber;
+    private String UserName;
+    private String Status;
+    private BigDecimal TotalAmount;
+    private String ShippingAddress;
+    private List<String> OrderItemIds;  // List of order item IDs (String)
 
     public MyOrdersModel() {
     }
 
-    public MyOrdersModel(String id,String productName, String productPrice, String currentDate, String status, List<MyCartModel> cartItems) {
-        this.id = id;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.currentDate = currentDate;
-        this.status = status;
-        this.cartItems = cartItems;
+    public MyOrdersModel(String orderId, String userName, String mobileNumber,
+                         DateTime createdAt, String userId, BigDecimal totalAmount,
+                         String shippingAddress, List<String> orderItemIds, String status) {
+        OrderId = orderId;
+        UserName = userName;
+        MobileNumber = mobileNumber;
+        CreatedAt = createdAt;
+        UserId = userId;
+        TotalAmount = totalAmount;
+        ShippingAddress = shippingAddress;
+        OrderItemIds = orderItemIds;
+        Status = String.valueOf(OrderStatus.Pending);  // Default to Pending
     }
 
-    public MyOrdersModel(String productName, String productPrice, String currentDate, String id, String status) {
+    // Getters and Setters
+    public String getOrderId() {
+        return OrderId;
     }
 
-
-    public String getId() {
-        return id;
+    public void setOrderId(String orderId) {
+        OrderId = orderId;
     }
 
-    public void setOrderId(String id) {
-        this.id = id;
+    public String getUserId() {
+        return UserId;
     }
 
-    public String getProductName() {
-        return productName;
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public DateTime getCreatedAt() {
+        return CreatedAt;
     }
 
-    public String getProductPrice() {
-        return productPrice;
+    public void setCreatedAt(DateTime createdAt) {
+        CreatedAt = createdAt;
     }
 
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
+    public String getMobileNumber() {
+        return MobileNumber;
     }
 
-    public String getCurrentDate() {
-        return currentDate;
+    public void setMobileNumber(String mobileNumber) {
+        MobileNumber = mobileNumber;
     }
 
-    public void setOrderDate(String orderDate) {
-        this.currentDate = orderDate;
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return TotalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        TotalAmount = totalAmount;
+    }
+
+    public String getShippingAddress() {
+        return ShippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        ShippingAddress = shippingAddress;
+    }
+
+    public List<String> getOrderItemIds() {
+        return OrderItemIds;
+    }
+
+    public void setOrderItemIds(List<String> orderItemIds) {
+        OrderItemIds = orderItemIds;
     }
 
     public String getStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        Status = status;
     }
 
-    public List<MyCartModel> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<MyCartModel> cartItems) {
-        this.cartItems = cartItems;
+    // Enum for order status
+    public enum OrderStatus {
+        Pending,
+        PartiallyDelivered,
+        Cancelled,
+        Delivered
     }
 }
