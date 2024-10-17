@@ -3,115 +3,115 @@ package com.example.mygrocerystore.models;
 import java.io.Serializable;
 
 public class MyCartModel implements Serializable {
-    String productName;
-    String productPrice;
-    String currentDate;
-    String currentTime;
-    String totalQuantity;
-    int totalPrice;
-    String id;
-    String status;
-    String userAddress;
-    String userMobile;
-    String userName;
+    String ProductId;
+    String ProductName;
+    String ProductPrice;
+    String Quantity;
+    String VendorId;
+    String VendorName;
+    String FulfillmentStatus;
+    String Amount;
+    String ShippingAddress;
+    String CreatedAt;
 
-    public MyCartModel() {
+    public MyCartModel(String productId, String productName, String productPrice, String quantity, String vendorId, String vendorName, String amount, String shippingAddress, String createdAt) {
+        ProductId = productId;
+        ProductName = productName;
+        ProductPrice = productPrice;
+        Quantity = quantity;
+        VendorId = vendorId;
+        VendorName = vendorName;
+        FulfillmentStatus = String.valueOf(FulfillmentStatusEnum.Pending);
+        Amount = amount;
+        ShippingAddress = shippingAddress;
+        CreatedAt = createdAt;
     }
 
-    public MyCartModel(String productName, String productPrice, String currentDate, String currentTime, String totalQuantity, int totalPrice) {
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.currentDate = currentDate;
-        this.currentTime = currentTime;
-        this.totalQuantity = totalQuantity;
-        this.totalPrice = totalPrice;
+    public String getProductId() {
+        return ProductId;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setProductId(String productId) {
+        ProductId = productId;
     }
 
     public String getProductName() {
-        return productName;
+        return ProductName;
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        ProductName = productName;
     }
 
     public String getProductPrice() {
-        return productPrice;
+        return ProductPrice;
     }
 
     public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
+        ProductPrice = productPrice;
     }
 
-    public String getCurrentDate() {
-        return currentDate;
+    public String getQuantity() {
+        return Quantity;
     }
 
-    public void setCurrentDate(String currentDate) {
-        this.currentDate = currentDate;
+    public void setQuantity(String quantity) {
+        Quantity = quantity;
     }
 
-    public String getCurrentTime() {
-        return currentTime;
+    public String getVendorId() {
+        return VendorId;
     }
 
-    public void setCurrentTime(String currentTime) {
-        this.currentTime = currentTime;
+    public void setVendorId(String vendorId) {
+        VendorId = vendorId;
     }
 
-    public String getTotalQuantity() {
-        return totalQuantity;
+    public String getVendorName() {
+        return VendorName;
     }
 
-    public void setTotalQuantity(String totalQuantity) {
-        this.totalQuantity = totalQuantity;
+    public void setVendorName(String vendorName) {
+        VendorName = vendorName;
     }
 
-    public int getTotalPrice() {
-        return totalPrice;
+    public String getFulfillmentStatus() {
+        return FulfillmentStatus;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setFulfillmentStatus(String fulfillmentStatus) {
+        FulfillmentStatus = fulfillmentStatus;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getAmount() {
+        return Amount;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setAmount(String amount) {
+        Amount = amount;
     }
 
-    public String getUserMobile() {
-        return userMobile;
+    public String getShippingAddress() {
+        return ShippingAddress;
     }
 
-    public void setUserMobile(String userMobile) {
-        this.userMobile = userMobile;
+    public void setShippingAddress(String shippingAddress) {
+        ShippingAddress = shippingAddress;
     }
 
-    public String getUserAddress() {
-        return userAddress;
+    public String getCreatedAt() {
+        return CreatedAt;
     }
 
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
+    public void setCreatedAt(String createdAt) {
+        CreatedAt = createdAt;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public enum FulfillmentStatusEnum
+    {
+        Pending,
+        Delivered,
+        PartiallyDelivered,
+        Shipped,
     }
 }
