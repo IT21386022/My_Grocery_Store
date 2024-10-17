@@ -37,21 +37,22 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Glide.with(context).load(popularModelList.get(position).getImg_url()).into(holder.popImg);
-        holder.name.setText(popularModelList.get(position).getName());
-        holder.rating.setText(popularModelList.get(position).getRating());
+        Glide.with(context).load(popularModelList.get(position).getImageUrl()).into(holder.popImg);
+        holder.name.setText(popularModelList.get(position).getProductName());
+        //holder.rating.setText(popularModelList.get(position).getRating());
         holder.description.setText(popularModelList.get(position).getDescription());
-        holder.discount.setText(popularModelList.get(position).getDiscount());
+        holder.price.setText(String.valueOf(popularModelList.get(position).getProductPrice()));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ViewAllActivity.class);
-                intent.putExtra("type",popularModelList.get(position).getType());
-                context.startActivity(intent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, ViewAllActivity.class);
+//                intent.putExtra("type",popularModelList.get(position).getType());
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -64,15 +65,15 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView popImg;
-        TextView name, description, rating, discount;
+        TextView name, description, rating, price;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             popImg =itemView.findViewById(R.id.pop_img);
             name = itemView.findViewById(R.id.pop_name);
             description = itemView.findViewById(R.id.pop_des);
-            discount = itemView.findViewById(R.id.pop_discount);
-            rating = itemView.findViewById(R.id.pop_rating);
+            price = itemView.findViewById(R.id.pop_price);
+//            rating = itemView.findViewById(R.id.pop_rating);
         }
     }
 }

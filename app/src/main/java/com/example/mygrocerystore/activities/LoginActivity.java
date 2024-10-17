@@ -13,9 +13,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mygrocerystore.R;
+import com.example.mygrocerystore.api.AuthApi;
 import com.example.mygrocerystore.client.ApiClient;
 import com.example.mygrocerystore.client.RetrofitClient;
 import com.example.mygrocerystore.api.ApiService;
+import com.example.mygrocerystore.models.LoginModel;
 import com.example.mygrocerystore.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
+//        auth = FirebaseAuth.getInstance();
+//        db = FirebaseDatabase.getInstance();
         signIn = findViewById(R.id.login_btn);
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
@@ -135,32 +137,60 @@ public class LoginActivity extends AppCompatActivity {
 //                });
 
         // Make API call using Retrofit
-        ApiService apiService = ApiClient.getApiService();
-        UserModel userModel = new UserModel(userEmail, userPassword);
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        LoginModel loginModel = new LoginModel(userEmail, userPassword);
 
-        apiService.loginUser(userModel).enqueue(new Callback<UserModel>() {
-            @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.isSuccessful()) {
-                    UserModel loggedInUser = response.body();
-                    if (loggedInUser != null) {
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();  // Close LoginActivity
-                    }
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login Failed: " + response.message(), Toast.LENGTH_SHORT).show();
-                }
+        apiService.loginUser(loginModel).enqueue(new Callback<LoginModel>() {
+//            @Override
+//            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+//                progressBar.setVisibility(View.GONE);
+//                if (response.isSuccessful()) {
+//                    LoginModel loggedInUser = response.body();
+//                    if (loggedInUser != null) {
+//                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                        startActivity(intent);
+//                        finish();  // Close LoginActivity
+//                    }
+//                } else {
+//                    Toast.makeText(LoginActivity.this, "Login Failed: " + response.message(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+
+            @Override 
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                progressBar.setVisibility(View.GONE);  
+                // Hide progress bar 
+                if(response.isSuccessful()) { 
+                    LoginModel loggedInUser =response.body(); 
+                    if (loggedInUser != null) { 
+                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show(); 
+                        // Navigate to HomeActivity on successful login 
+                        navigateToHome(); 
+                    } else { 
+                        Toast.makeText(LoginActivity.this, "Login Failed: Empty Response", Toast.LENGTH_SHORT).show(); 
+                    } 
+                } else { 
+                    // Log the error message for better debugging 
+                    Toast.makeText(LoginActivity.this, "Login Failed: " + response.message(), Toast.LENGTH_SHORT).show(); 
+                } 
+            }
+            @Override 
+            public void onFailure(Call<LoginModel> call, Throwable t) { 
+                progressBar.setVisibility(View.GONE);  
+                // Hide progress bar 
+                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show(); 
             }
 
-            @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+           
+            
         });
     }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
+}
 

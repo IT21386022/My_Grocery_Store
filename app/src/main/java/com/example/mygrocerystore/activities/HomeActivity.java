@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
-    FirebaseDatabase database;
+//    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        database = FirebaseDatabase.getInstance();
+//        database = FirebaseDatabase.getInstance();
 
         setSupportActionBar(binding.appBarHome.toolbar);
 
@@ -61,22 +61,22 @@ public class HomeActivity extends AppCompatActivity {
         TextView headerEmail = headerView.findViewById(R.id.nav_header_email);
         CircleImageView headerImg = headerView.findViewById(R.id.nav_header_img);
 
-        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        UserModel userModel = snapshot.getValue(UserModel.class);
-
-                        headerName.setText(userModel.getFirstname());
-                        headerEmail.setText(userModel.getEmail());
-                        Glide.with(HomeActivity.this).load(userModel.getProfileImg()).into(headerImg);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+//        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        UserModel userModel = snapshot.getValue(UserModel.class);
+//
+//                        headerName.setText(userModel.getFirstname());
+//                        headerEmail.setText(userModel.getEmail());
+//                        Glide.with(HomeActivity.this).load(userModel.getProfileImg()).into(headerImg);
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
     }
 
     @Override

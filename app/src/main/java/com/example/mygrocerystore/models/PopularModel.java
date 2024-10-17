@@ -1,31 +1,45 @@
 package com.example.mygrocerystore.models;
 
 public class PopularModel {
-    String name;
-    String description;
-    String rating;
-    String discount;
-    String type;
-    String img_url;
+    private String id;
+    private String productName;
+    private String description;
+    private String imageUrl;
+    private double productPrice;
+    private int stock;
+    private String vendorId;
+    private String vendorName;
+    private String createdAt;
 
     public PopularModel() {
     }
 
-    public PopularModel(String name, String description, String rating, String discount, String type, String img_url) {
-        this.name = name;
+    public PopularModel(String id, String productName, String description, String imageUrl, double productPrice, int stock, String vendorId, String vendorName, String createdAt) {
+        this.id = id;
+        this.productName = productName;
         this.description = description;
-        this.rating = rating;
-        this.discount = discount;
-        this.type = type;
-        this.img_url = img_url;
+        this.imageUrl = imageUrl;
+        this.productPrice = productPrice;
+        this.stock = stock;
+        this.vendorId = vendorId;
+        this.vendorName = vendorName;
+        this.createdAt = createdAt;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getDescription() {
@@ -36,35 +50,51 @@ public class PopularModel {
         this.description = description;
     }
 
-    public String getRating() {
-        return rating;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getDiscount() {
-        return discount;
+    public double getProductPrice() {
+        return productPrice;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public String getType() {
-        return type;
+    public int getStock() {
+        return stock;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getVendorId() {
+        return vendorId;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
+    }
+
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }
