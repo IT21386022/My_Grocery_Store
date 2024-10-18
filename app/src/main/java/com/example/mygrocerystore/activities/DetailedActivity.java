@@ -118,6 +118,7 @@ public class DetailedActivity extends AppCompatActivity {
         );
         cartStorage.addCartItem(cartItem);
         Toast.makeText(DetailedActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
-        finish();
+
+//        finish();
     }
 }

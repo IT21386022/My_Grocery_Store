@@ -26,6 +26,12 @@ public class CartStorage {
         saveCartItems(cartItems);
     }
 
+    public void removeCartItem(MyCartModel cartItem) {
+        List<MyCartModel> cartItems = getCartItems();
+        cartItems.remove(cartItem); // Remove the selected cart item
+        saveCartItems(cartItems);   // Save the updated cart items
+    }
+
     public List<MyCartModel> getCartItems() {
         String json = sharedPreferences.getString(CART_ITEMS_KEY, null);
         Type type = new TypeToken<List<MyCartModel>>() {}.getType();
@@ -40,4 +46,6 @@ public class CartStorage {
         String json = gson.toJson(cartItems);
         sharedPreferences.edit().putString(CART_ITEMS_KEY, json).apply();
     }
+
+
 }

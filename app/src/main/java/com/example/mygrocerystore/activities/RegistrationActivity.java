@@ -100,25 +100,6 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        //create user
-//        auth.createUserWithEmailAndPassword(userEmail,userPassword)
-//                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if(task.isSuccessful()){
-//                            UserModel userModel = new UserModel(userName,userEmail,userPassword);
-//                            String id = task.getResult().getUser().getUid();
-//                            database.getReference().child("Users").child(id).setValue(userModel);
-//                            progressBar.setVisibility(View.GONE);
-//                            Toast.makeText(RegistrationActivity.this,"Registration Successful", Toast.LENGTH_SHORT).show();
-//                        }
-//                        else{
-//                            progressBar.setVisibility(View.GONE);
-//                            Toast.makeText(RegistrationActivity.this,"Error"+task.getException(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-
         progressBar.setVisibility(View.VISIBLE);
 
         // Create user model
@@ -133,6 +114,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(RegistrationActivity.this, "Registration Failed: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
